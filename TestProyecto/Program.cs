@@ -16,22 +16,34 @@ do {
         case ConsoleKey.B:
             Borrar();
             break;
-        case ConsoleKey.S:            
+        case ConsoleKey.S:
             Console.WriteLine("Cerrando programa.");
             break;
         default:
-            Console.Error.WriteLine("Comando no registrado. Por favor, intentelo de nuevo.");            
+            Console.Error.WriteLine("Comando no registrado. Por favor, intentelo de nuevo.");
             break;
     }
 } while (action.Key != ConsoleKey.S);
 
 
 void Crear() {
-    
+    string nombre = ObtenerDato("Escriba el nombre del departamento: ", "Nombre no puede estar vacio");
+    string grupo = ObtenerDato("Escriba el grupo del departamento: ", "Grupo no puede estar vacio");
+
+    using (var db = new TestProyecto.RRHHDepartment()) {
+        try {
+            db.Departments.Add(new TestProyecto.Department { Name = nombre, GroupName = grupo, ModifiedDate = DateTime.Now });
+            db.SaveChanges();
+            Console.WriteLine("Insertado correctamente");
+        } catch (Microsoft.EntityFrameworkCore.DbUpdateException e) {
+            Console.Error.WriteLine("A ocurrido un error al insertar el departamento, intentelo de nuevo mas tarde.");
+            Console.Error.WriteLine(e.Message);
+        }
+    }
 }
 
 void Leer() {
-    
+
 }
 
 void Actualizar() {
@@ -57,4 +69,18 @@ void Menu() {
     action = Console.ReadKey();
 
     Console.Clear();
+}
+
+string ObtenerDato(string info, string error) {
+    string dato = string.Empty;
+
+    Console.Write(info);
+    while ((dato = Console.ReadLine()) == string.Empty) {
+        Console.Clear();
+        Console.Error.WriteLine(error);
+
+        Console.Write(info);
+    }
+
+    return dato;
 }
