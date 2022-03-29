@@ -102,7 +102,32 @@
     }
 
     static void Borrar() {
-        Console.WriteLine("Borrar");
+        using (var db = new TestProyecto.RRHHDepartment()) {
+            int id = ObtenerNum("Escriba el id del departamento: ", "Error eso no es un número", "Id no puede estar vacio");
+
+            try {
+                var departamento = db.Departments.AsEnumerable().ElementAt(id - 1);
+
+                Console.WriteLine("Departamento a borrar: " + departamento.ToString());
+                
+
+                Console.Write("\nEstas seguro de que quieres borrar el departamento (Y/N): ");
+                ConsoleKey key = Console.ReadKey().Key;
+
+                if (key == ConsoleKey.Y) {
+                    db.Departments.Remove(departamento);
+                    db.SaveChanges();
+                    Console.WriteLine("\nDepartamento borrado correctamente.");
+                } else {
+                    Console.WriteLine("\nOperación cancelada.");
+                }
+
+            } catch (ArgumentOutOfRangeException) {
+                Console.Error.WriteLine($"Error! Departamento no encontrado. Asegurese de que el id esta entre 0 y {db.Departments.Count()}");
+            }
+
+            ConsolaEspera();
+        }
     }
 
     static ConsoleKey Menu() {
