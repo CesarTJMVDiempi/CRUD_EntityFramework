@@ -1,14 +1,60 @@
-﻿Console.WriteLine("Inserte un número");
-string? ts = Console.In.ReadLine();
-int n;
-;
+﻿ConsoleKeyInfo action;
+
+do {
+    Menu();
+
+    switch (action.Key) {
+        case ConsoleKey.C:
+            Crear();
+            break;
+        case ConsoleKey.L:
+            Leer();
+            break;
+        case ConsoleKey.A:
+            Actualizar();
+            break;
+        case ConsoleKey.B:
+            Borrar();
+            break;
+        case ConsoleKey.S:            
+            Console.WriteLine("Cerrando programa.");
+            break;
+        default:
+            Console.Error.WriteLine("Comando no registrado. Por favor, intentelo de nuevo.");            
+            break;
+    }
+} while (action.Key != ConsoleKey.S);
 
 
-if (ts == string.Empty) Console.WriteLine("No has escrito nada");
-else if (int.TryParse(ts, out n)) {
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine(n);
-} else {
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine(ts + " NO ES UN NÚMERO!");
+void Crear() {
+    
+}
+
+void Leer() {
+    
+}
+
+void Actualizar() {
+    Console.WriteLine("Actualizar");
+}
+
+void Borrar() {
+    Console.WriteLine("Borrar");
+}
+
+void Menu() {
+    Console.WriteLine("+-----------------------+");
+    Console.WriteLine("| CRUD ENTITY FRAMEWORK |");
+    Console.WriteLine("+-----------------------+");
+    Console.WriteLine("| [C]rear registro      |");
+    Console.WriteLine("| [L]eer registro       |");
+    Console.WriteLine("| [A]ctualizar registro |");
+    Console.WriteLine("| [B]orrar registro     |");
+    Console.WriteLine("| [S]alir del programa  |");
+    Console.WriteLine("+-----------------------+");
+
+    Console.Write("\n Accion a realizar (C, L, A, B, S): ");
+    action = Console.ReadKey();
+
+    Console.Clear();
 }

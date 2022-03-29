@@ -8,7 +8,7 @@ namespace TestProyecto
     public partial class RRHHDepartment : DbContext
     {
         public RRHHDepartment()
-        {
+        {            
         }
 
         public RRHHDepartment(DbContextOptions<RRHHDepartment> options)
