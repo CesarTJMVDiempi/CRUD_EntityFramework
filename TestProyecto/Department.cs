@@ -24,5 +24,9 @@ namespace TestProyecto
         /// Date and time the record was last updated.
         /// </summary>
         public DateTime ModifiedDate { get; set; }
+
+        public override string ToString() {
+            return $"[Id: {DepartmentId}; Nombre: {Name}; Grupo: {GroupName}; Fecha de modificación: {ModifiedDate}]";
+        }
     }
 }
