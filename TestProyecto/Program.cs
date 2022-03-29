@@ -63,7 +63,30 @@
     }
 
     static void Actualizar() {
-        Console.WriteLine("Actualizar");
+        using (var db = new TestProyecto.RRHHDepartment()) {
+            int id = ObtenerNum("Escriba el id del departamento: ", "Error eso no es un número", "Id no puede estar vacio");
+            var departamento = db.Departments.AsEnumerable().ElementAt(id - 1);
+
+            Console.WriteLine("Departamento a modificar:");
+            Console.WriteLine(departamento.ToString() + "\n");
+
+            string nombre = ObtenerDato("Inserte el nuevo nombre del departamento: ");
+            if (nombre != string.Empty) departamento.Name = nombre;
+
+            string grupo = ObtenerDato("Inserte el nuevo grupo del departamento: ");
+            if (grupo != string.Empty) departamento.GroupName = grupo;
+
+            departamento.ModifiedDate = DateTime.Now;
+
+
+            db.SaveChanges();
+
+            Console.WriteLine("\nDepartamento actualizado.");
+            Console.WriteLine("Datos del departamento:");
+            Console.WriteLine(departamento.ToString());
+        }
+
+        ConsolaEspera();
     }
 
     static void Borrar() {
@@ -130,7 +153,7 @@
     }
 
     static void ConsolaEspera() {
-        Console.Write("Pulsa una tecla para continuar...");
+        Console.Write("\nPulsa una tecla para continuar...");
         Console.ReadKey();
         Console.Clear();
     }
