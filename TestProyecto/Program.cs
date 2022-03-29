@@ -12,6 +12,9 @@
                 case ConsoleKey.L:
                     Leer();
                     break;
+                case ConsoleKey.M:
+                    Mostrar();
+                    break;
                 case ConsoleKey.A:
                     Actualizar();
                     break;
@@ -62,6 +65,15 @@
         ConsolaEspera();
     }
 
+    static void Mostrar() {
+        using (var db = new TestProyecto.RRHHDepartment()) {
+            Console.WriteLine("Listado de departamentos:");
+
+            db.Departments.ToList().ForEach(dep => Console.WriteLine("\t" + dep.ToString()));
+            ConsolaEspera();
+        }
+    }
+
     static void Actualizar() {
         using (var db = new TestProyecto.RRHHDepartment()) {
             int id = ObtenerNum("Escriba el id del departamento: ", "Error eso no es un número", "Id no puede estar vacio");
@@ -99,12 +111,13 @@
         Console.WriteLine("+-----------------------+");
         Console.WriteLine("| [C]rear registro      |");
         Console.WriteLine("| [L]eer registro       |");
+        Console.WriteLine("| [M]ostrar listado     |");
         Console.WriteLine("| [A]ctualizar registro |");
         Console.WriteLine("| [B]orrar registro     |");
         Console.WriteLine("| [S]alir del programa  |");
         Console.WriteLine("+-----------------------+");
 
-        Console.Write("\n Accion a realizar (C, L, A, B, S): ");
+        Console.Write("\n Accion a realizar (C, L, M, A, B, S): ");
         ConsoleKeyInfo action = Console.ReadKey();
 
         Console.Clear();
